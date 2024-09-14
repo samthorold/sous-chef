@@ -3,8 +3,8 @@
 ## TODO
 
 - [x] Make it deploy
-- [ ] Scaffold a UI
-- [ ] Add a database
+- [x] Scaffold a UI
+- [x] Add a database
 - [ ] Attach database to UI
 - [ ] Add authentication
 - [ ] Create recipe

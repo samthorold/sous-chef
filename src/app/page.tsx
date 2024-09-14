@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { db } from "~/server/db";
+import { posts } from "~/server/db/schema";
 
 type Recipe = {
   id: string;
@@ -38,6 +40,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
           src="https://via.placeholder.com/75"
           alt={`${recipe.name} image`}
           className="h-full w-full object-cover"
+          id={recipe.id}
         />
       </div>
       <div className="flex flex-1 flex-col justify-between">
@@ -63,16 +66,18 @@ function RecipeList({ recipes }: { recipes: Recipe[] }) {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const recipes = await db.query.posts.findMany();
+  console.log(recipes);
   return (
     <main className="p-4">
       <div className="flex flex-wrap">
         <RecipeList
           recipes={[
             ...mockRecipes,
-            ...mockRecipes,
-            ...mockRecipes,
-            ...mockRecipes,
+            //...mockRecipes,
+            //...mockRecipes,
+            //...mockRecipes,
           ]}
         />
       </div>
