@@ -1,12 +1,80 @@
 import Link from "next/link";
 
+type Recipe = {
+  id: string;
+  lifetimeId: string;
+  parentId: string;
+  name: string;
+  createdAt: Date;
+  vectorId: string;
+};
+
+const mockRecipes: Recipe[] = [
+  {
+    id: "1",
+    lifetimeId: "1",
+    parentId: "1",
+    name: "Tiramisu",
+    createdAt: new Date(),
+    vectorId: "1",
+  },
+  {
+    id: "2",
+    lifetimeId: "2",
+    parentId: "2",
+    name: "Linguine de fruiti de mare",
+    createdAt: new Date(),
+    vectorId: "2",
+  },
+];
+
+// React component for a recipe card
+function RecipeCard({ recipe }: { recipe: Recipe }) {
+  return (
+    <div className="card flex flex-col rounded-lg p-4 shadow-lg">
+      <div className="aspect-w-16 aspect-h-9 mb-4 bg-gray-200">
+        {/* Placeholder for an image */}
+        <img
+          src="https://via.placeholder.com/75"
+          alt={`${recipe.name} image`}
+          className="h-full w-full object-cover"
+        />
+      </div>
+      <div className="flex flex-1 flex-col justify-between">
+        <h2 className="text-xl font-bold">{recipe.name}</h2>
+        <p className="text-gray-500">
+          Created at: {recipe.createdAt.toLocaleString()}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// React component for a list of recipe cards
+function RecipeList({ recipes }: { recipes: Recipe[] }) {
+  return (
+    <div className="flex flex-wrap gap-4">
+      {recipes.map((recipe) => (
+        <div key={recipe.id} className="w-48">
+          <RecipeCard recipe={recipe} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Sous Chef
-        </h1>
+    <main className="p-4">
+      <div className="flex flex-wrap">
+        <RecipeList
+          recipes={[
+            ...mockRecipes,
+            ...mockRecipes,
+            ...mockRecipes,
+            ...mockRecipes,
+          ]}
+        />
       </div>
     </main>
   );
