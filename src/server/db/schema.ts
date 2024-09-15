@@ -18,19 +18,19 @@ import {
  */
 export const createTable = pgTableCreator((name) => `sous-chef_${name}`);
 
-export const posts = createTable(
-  "post",
+export const recipes = createTable(
+  "recipe",
   {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    id: varchar("id", { length: 64 }).primaryKey(),
+    lifetimeId: varchar("lifetime_id", { length: 64 }).notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
+    contentId: varchar("content_id", { length: 64 }).notNull(),
+    vectorId: varchar("vector_id", { length: 64 }).notNull(),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );

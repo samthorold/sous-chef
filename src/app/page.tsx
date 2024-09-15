@@ -69,19 +69,11 @@ function RecipeList({ recipes }: { recipes: Recipe[] }) {
 }
 
 export default async function HomePage() {
-  const recipes = await db.query.posts.findMany();
-  console.log(recipes);
+  const recipes = await db.query.recipes.findMany();
   return (
     <main className="p-4">
       <div className="flex flex-wrap">
-        <RecipeList
-          recipes={[
-            ...mockRecipes,
-            //...mockRecipes,
-            //...mockRecipes,
-            //...mockRecipes,
-          ]}
-        />
+        <RecipeList recipes={recipes} />
       </div>
     </main>
   );
