@@ -1,7 +1,8 @@
-import { Recipe } from "../_repository/recipe_repository";
+import { db } from "~/server/db";
 import RecipeCard from "./recipecard";
 
-export default function RecipeList({ recipes }: { recipes: Recipe[] }) {
+export default async function RecipeList() {
+  const recipes = await db.query.recipes.findMany();
   return (
     <div className="flex flex-wrap gap-4">
       {recipes.map((recipe) => (
