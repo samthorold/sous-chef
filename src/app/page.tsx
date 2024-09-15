@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 type Recipe = {
   id: string;
   lifetimeId: string;
-  parentId: string;
+  parentId: string | null;
   name: string;
   createdAt: Date;
   vectorId: string;
