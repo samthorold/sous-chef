@@ -6,6 +6,6 @@
 - [x] Scaffold a UI
 - [x] Add a database
 - [x] Attach database to UI
-- [ ] Add authentication
+- [x] Add authentication
 - [ ] Create recipe
 - [ ] Error management
