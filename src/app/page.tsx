@@ -2,6 +2,8 @@ import Link from "next/link";
 import { db } from "~/server/db";
 import { posts } from "~/server/db/schema";
 
+export const dynamic = "force-dynamic";
+
 type Recipe = {
   id: string;
   lifetimeId: string;
