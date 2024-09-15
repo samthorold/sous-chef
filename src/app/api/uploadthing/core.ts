@@ -31,7 +31,7 @@ export const ourFileRouter = {
 
       try {
         await new RecipeRepository().addImageToRecipe(
-          2,
+          1,
           file.key,
           file.url,
           metadata.userId,

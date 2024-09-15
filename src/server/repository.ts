@@ -2,7 +2,6 @@ import "server-only";
 
 import { db } from "./db";
 import { image, recipe } from "./db/schema";
-import { sql } from "drizzle-orm";
 
 export type Recipe = {
   id: number;
@@ -15,9 +14,24 @@ export type Recipe = {
   vectorId: string;
 };
 
-export type RecipeWithLatestImage = {
-  recipe: Recipe;
-  img_src: string;
+export type Image = {
+  id: number;
+  userId: string;
+  recipeId: number;
+  key: string;
+  url: string;
+};
+
+export type RecipeWithImages = {
+  id: number;
+  lifetimeId: number;
+  parentId: number | null;
+  userId: string;
+  name: string;
+  createdAt: Date;
+  contentId: string;
+  vectorId: string;
+  images: Image[];
 };
 
 export class RecipeRepository {
@@ -36,6 +50,15 @@ export class RecipeRepository {
   async getRecipes() {
     const recipes = await db.query.recipe.findMany({
       orderBy: (model, { desc }) => desc(model.createdAt),
+    });
+    return recipes;
+  }
+
+  async getRecipesWithImages() {
+    const recipes = await db.query.recipe.findMany({
+      with: {
+        images: { orderBy: (images, { desc }) => [desc(images.createdAt)] },
+      },
     });
     return recipes;
   }

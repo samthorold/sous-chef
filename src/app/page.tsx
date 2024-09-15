@@ -5,7 +5,7 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const recipes = await new RecipeRepository().getRecipes();
+  const recipes = await new RecipeRepository().getRecipesWithImages();
   return (
     <main className="">
       <SignedOut>Please sign in.</SignedOut>
