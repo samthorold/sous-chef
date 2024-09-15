@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { db } from "~/server/db";
-import { posts } from "~/server/db/schema";
+import { recipes } from "~/server/db/schema";
 
 export const dynamic = "force-dynamic";
 
+// We'll use this when we come to use a repository pattern
 type Recipe = {
   id: string;
   lifetimeId: string;
@@ -12,25 +13,6 @@ type Recipe = {
   createdAt: Date;
   vectorId: string;
 };
-
-const mockRecipes: Recipe[] = [
-  {
-    id: "1",
-    lifetimeId: "1",
-    parentId: "1",
-    name: "Tiramisu",
-    createdAt: new Date(),
-    vectorId: "1",
-  },
-  {
-    id: "2",
-    lifetimeId: "2",
-    parentId: "2",
-    name: "Linguine de fruiti de mare",
-    createdAt: new Date(),
-    vectorId: "2",
-  },
-];
 
 // React component for a recipe card
 function RecipeCard({ recipe }: { recipe: Recipe }) {
