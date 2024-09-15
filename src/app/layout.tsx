@@ -1,15 +1,10 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-
+import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import "~/styles/globals.css";
+import "@uploadthing/react/styles.css";
+
 import TopNav from "./_components/topnav";
 
 export const metadata: Metadata = {
