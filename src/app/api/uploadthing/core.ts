@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
-import { db } from "~/server/db";
-import { images } from "~/server/db/schema";
+import { RecipeRepository } from "~/server/repository";
 
 const f = createUploadthing();
 
@@ -28,9 +27,19 @@ export const ourFileRouter = {
 
       console.log("file url", file.url);
 
-      await db
-        .insert(images)
-        .values({ id: file.key, url: file.url, userId: metadata.userId });
+      console.log("RecipeRepository().addImageToRecipe");
+
+      try {
+        await new RecipeRepository().addImageToRecipe(
+          2,
+          file.key,
+          file.url,
+          metadata.userId,
+        );
+      } catch (error) {
+        console.log("error in api route", error);
+        throw error;
+      }
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };

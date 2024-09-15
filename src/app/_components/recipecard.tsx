@@ -1,4 +1,4 @@
-import { Recipe } from "../../server/repository/recipe_repository";
+import type { Recipe } from "~/server/repository";
 
 export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   return (
