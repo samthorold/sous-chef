@@ -1,7 +1,8 @@
 import "server-only";
 
 import { db } from "./db";
-import { image, recipe, recipeToImage } from "./db/schema";
+import { image, recipe } from "./db/schema";
+import { sql } from "drizzle-orm";
 
 export type Recipe = {
   id: number;
@@ -12,6 +13,11 @@ export type Recipe = {
   createdAt: Date;
   contentId: string;
   vectorId: string;
+};
+
+export type RecipeWithLatestImage = {
+  recipe: Recipe;
+  img_src: string;
 };
 
 export class RecipeRepository {
@@ -49,20 +55,21 @@ export class RecipeRepository {
     userId: string,
   ) {
     try {
+      // const _ = await this.getRecipe(recipeId);
+      // could check recipe id existence
       const newFileId = await db
         .insert(image)
-        .values({ key: fileKey, url: fileUrl, userId: userId })
+        .values({
+          key: fileKey,
+          url: fileUrl,
+          userId: userId,
+          recipeId: recipeId,
+        })
         .returning({ id: image.id });
       if (!newFileId[0])
         throw new Error(
           `addImageToRecipe: File [${fileKey}] not inserted into DB.`,
         );
-      const recipe = await this.getRecipe(recipeId);
-      await db.insert(recipeToImage).values({
-        recipeId: recipe.id,
-        recipeLifetimeId: recipe.lifetimeId,
-        imageId: newFileId[0].id,
-      });
     } catch (error) {
       throw error;
     }

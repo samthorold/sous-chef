@@ -4,7 +4,6 @@ import {
   pgTableCreator,
   serial,
   timestamp,
-  unique,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -25,20 +24,8 @@ export const recipe = createTable("recipes_tbl", {
 
 export const image = createTable("images_tbl", {
   id: serial("id").primaryKey(),
+  recipeId: integer("recipe_id").notNull(),
   key: varchar("key", { length: 64 }).notNull(),
   userId: varchar("user_id", { length: 64 }).notNull(),
   url: varchar("url").notNull(),
 });
-
-export const recipeToImage = createTable(
-  "recipes_to_images_tbl",
-  {
-    id: serial("id").primaryKey(),
-    recipeId: integer("recipe_id").notNull(),
-    recipeLifetimeId: integer("recipe_lifetime_id").notNull(),
-    imageId: integer("image_id").notNull(),
-  },
-  (t) => ({
-    unq: unique().on(t.recipeId, t.imageId),
-  }),
-);
