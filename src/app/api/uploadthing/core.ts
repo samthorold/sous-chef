@@ -17,7 +17,7 @@ export const ourFileRouter = {
       const user = auth();
 
       // If you throw, the user will not be able to upload
-      if (!user.userId) throw new UploadThingError("Unauthorized"); // eslint-disable-line @typescript-eslint/only-throw-errors
+      if (!user.userId) throw new UploadThingError("Unauthorized"); // eslint-disable-line only-throw-errors
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.userId };
