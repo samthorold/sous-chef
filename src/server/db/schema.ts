@@ -23,3 +23,8 @@ export const recipes = createTable(
     nameIndex: index("name_idx").on(example.name),
   }),
 );
+
+export const images = createTable("image", {
+  id: varchar("id", { length: 64 }).primaryKey(),
+  url: varchar("url").notNull(),
+});
