@@ -12,6 +12,7 @@ export const recipes = createTable(
     id: varchar("id", { length: 64 }).primaryKey(),
     lifetimeId: varchar("lifetime_id", { length: 64 }).notNull(),
     parentId: varchar("parent_id", { length: 64 }),
+    userId: varchar("user_id", { length: 64 }).notNull(),
     name: varchar("name", { length: 256 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -26,5 +27,6 @@ export const recipes = createTable(
 
 export const images = createTable("image", {
   id: varchar("id", { length: 64 }).primaryKey(),
+  userId: varchar("user_id", { length: 64 }).notNull(),
   url: varchar("url").notNull(),
 });
