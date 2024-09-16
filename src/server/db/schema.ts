@@ -11,7 +11,6 @@ export const createTable = pgTableCreator((name) => `sous-chef_${name}`);
 
 export const recipe = createTable("recipes_tbl", {
   id: serial("id").primaryKey(),
-  lifetimeId: integer("lifetime_id").notNull(),
   parentId: integer("parent_id"),
   userId: varchar("user_id", { length: 64 }).notNull(),
   name: varchar("name", { length: 256 }).notNull(),

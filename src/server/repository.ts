@@ -3,40 +3,57 @@ import "server-only";
 import { db } from "./db";
 import { image, recipe } from "./db/schema";
 
-export type Recipe = {
+export interface Recipe {
   id: number;
-  lifetimeId: number;
   parentId: number | null;
   userId: string;
   name: string;
   createdAt: Date;
   contentId: string;
   vectorId: string;
-};
+}
 
-export type Image = {
+export interface NewRecipe {
+  userId: string;
+  name: string;
+  description: string;
+}
+
+export interface Image {
   id: number;
   userId: string;
   recipeId: number;
   key: string;
   url: string;
-};
+}
 
-export type RecipeWithImages = {
-  id: number;
-  lifetimeId: number;
-  parentId: number | null;
-  userId: string;
-  name: string;
-  createdAt: Date;
-  contentId: string;
-  vectorId: string;
+export interface RecipeWithImages extends Recipe {
   images: Image[];
-};
+}
 
 export class RecipeRepository {
-  async createRecipe(newRecipe: Recipe) {
-    await db.insert(recipe).values(newRecipe);
+  async createRecipe(r: NewRecipe): Promise<Recipe> {
+    const newRecipes = await db
+      .insert(recipe)
+      .values({
+        userId: r.userId,
+        name: r.name,
+        contentId: 1,
+        vectorId: 1,
+      })
+      .returning();
+    if (!newRecipes[0])
+      throw new Error("createRecipe: Error creating new recipe.");
+    const newRecipe = newRecipes[0];
+    return {
+      id: newRecipe.id,
+      parentId: null,
+      userId: newRecipe.userId,
+      name: newRecipe.name,
+      createdAt: newRecipe.createdAt,
+      contentId: newRecipe.contentId,
+      vectorId: newRecipe.vectorId,
+    };
   }
 
   async getRecipe(id: number) {
