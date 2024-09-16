@@ -36,10 +36,10 @@ export class RecipeRepository {
     const newRecipes = await db
       .insert(recipe)
       .values({
-        userId: r.userId,
         name: r.name,
-        contentId: 1,
-        vectorId: 1,
+        userId: r.userId,
+        contentId: "1",
+        vectorId: "1",
       })
       .returning();
     if (!newRecipes[0])
